@@ -1,0 +1,21 @@
+{
+  "name": "goodreads-local-library-finder",
+  "version": "1.0.0",
+  "description": "Chrome MV3 extension that injects local library availability into Goodreads book pages, scoped by a user-supplied ZIP code.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint . --ext .js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
