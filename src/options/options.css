@@ -1,0 +1,7 @@
+body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; }
+.gllf-options { max-width: 480px; margin: 0 auto; }
+label { display: block; margin-top: 12px; font-weight: 600; }
+input { width: 100%; box-sizing: border-box; padding: 8px; margin-top: 4px; font-size: 14px; }
+button { margin-top: 12px; padding: 8px 16px; }
+.gllf-note { color: #555; font-size: 0.85em; margin-top: 16px; }
+@media (max-width: 480px) { .gllf-options { padding: 0 8px; } }

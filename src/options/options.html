@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="gllf-options">
+    <h1>Goodreads Local Library Finder \u2014 Settings</h1>
+    <label for="zip">ZIP code</label>
+    <input id="zip" type="text" inputmode="numeric" maxlength="10" placeholder="e.g. 91754" />
+    <button id="save">Save</button>
+    <p id="feedback" role="status"></p>
+    <p class="gllf-note">
+      Your ZIP code is stored locally in this browser profile (chrome.storage.local)
+      only to scope library search results. Book and library data are never stored.
+    </p>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

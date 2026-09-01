@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; width: 220px; padding: 12px; margin: 0; }
+h1 { font-size: 14px; margin: 0 0 8px; }
+p { font-size: 13px; color: #333; }
+a { font-size: 13px; color: #1a73e8; }
+@media (min-width: 400px) { body { width: 280px; } }
