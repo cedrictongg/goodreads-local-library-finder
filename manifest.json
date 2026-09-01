@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Goodreads Local Library Finder",
+  "version": "1.0.0",
+  "description": "Injects local library availability into Goodreads book pages by looking up ISBNs against WorldCat, scoped to a user-supplied ZIP code.",
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Goodreads Local Library Finder"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.goodreads.com/book/show/*"],
+      "js": ["src/content/goodreadsParser.js", "src/content/injectPanel.js", "src/content/content-script.js"],
+      "css": ["src/content/panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "src/options/options.html",
+  "permissions": ["storage", "offscreen"],
+  "host_permissions": ["https://search.worldcat.org/*"],
+  "minimum_chrome_version": "116"
+}
