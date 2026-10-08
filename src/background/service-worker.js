@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   return true; // keep the message channel open for the async response
 });
 
-async function handleLookup({ book, zip } = {}) {
+export async function handleLookup({ book, zip } = {}) {
   if (!zip) return { error: 'missing_zip' };
   if (!book?.isbn) return { error: 'missing_isbn' };
 
