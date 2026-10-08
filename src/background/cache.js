@@ -5,6 +5,7 @@
 // session -- it is NOT persistent storage, satisfying the "data should
 // not be stored anywhere" requirement.
 const TTL_MS = 5 * 60 * 1000;
+export const MAX_CACHE_SIZE = 100;
 const store = new Map();
 
 export function getCached(key) {
@@ -14,13 +15,28 @@ export function getCached(key) {
     store.delete(key);
     return null;
   }
+  // Refresh recency in Map insertion order for LRU eviction
+  store.delete(key);
+  store.set(key, entry);
   return entry.value;
 }
 
 export function setCached(key, value) {
+  if (store.has(key)) {
+    store.delete(key);
+  } else if (store.size >= MAX_CACHE_SIZE) {
+    const oldestKey = store.keys().next().value;
+    if (oldestKey !== undefined) {
+      store.delete(oldestKey);
+    }
+  }
   store.set(key, { value, timestamp: Date.now() });
 }
 
 export function cacheKey(isbn, zip) {
   return `${isbn}|${zip}`;
+}
+
+export function clearCache() {
+  store.clear();
 }
