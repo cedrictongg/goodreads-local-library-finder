@@ -31,7 +31,9 @@ export class LibraryAdapter {
    * @param {string} zip
    * @returns {Promise<LibraryHolding[]>}
    */
+  /* eslint-disable no-unused-vars */
   async findHoldings(book, zip) {
     throw new Error('LibraryAdapter.findHoldings() is abstract and must be overridden');
   }
+  /* eslint-enable no-unused-vars */
 }
