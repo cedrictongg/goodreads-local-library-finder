@@ -48,7 +48,12 @@
     clearCards(shadow);
     const card = document.createElement('div');
     card.className = 'gllf-card';
-    card.innerHTML = '<div class="gllf-title">Checking local library availability\u2026</div>';
+
+    const title = document.createElement('div');
+    title.className = 'gllf-title';
+    title.textContent = 'Checking local library availability\u2026';
+
+    card.appendChild(title);
     shadow.appendChild(card);
   }
 
@@ -59,20 +64,45 @@
     card.className = 'gllf-card';
 
     if (!holdings || holdings.length === 0) {
-      card.innerHTML = '<div class="gllf-title">No local library match found</div>'
-        + '<div class="gllf-muted">Try a different ZIP code in the extension popup.</div>';
+      const title = document.createElement('div');
+      title.className = 'gllf-title';
+      title.textContent = 'No local library match found';
+
+      const muted = document.createElement('div');
+      muted.className = 'gllf-muted';
+      muted.textContent = 'Try a different ZIP code in the extension popup.';
+
+      card.appendChild(title);
+      card.appendChild(muted);
       shadow.appendChild(card);
       return;
     }
 
-    const rows = holdings.map((h) => `
-      <div class="gllf-row">
-        <a class="gllf-link" href="${h.catalogUrl}" target="_blank" rel="noopener noreferrer">${h.libraryName}</a>
-        <span class="gllf-muted">${h.distance || ''}</span>
-      </div>
-    `).join('');
+    const title = document.createElement('div');
+    title.className = 'gllf-title';
+    title.textContent = `Library availability near ${zip}`;
+    card.appendChild(title);
 
-    card.innerHTML = `<div class="gllf-title">Library availability near ${zip}</div>${rows}`;
+    holdings.forEach((h) => {
+      const row = document.createElement('div');
+      row.className = 'gllf-row';
+
+      const link = document.createElement('a');
+      link.className = 'gllf-link';
+      link.href = h.catalogUrl || '';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = h.libraryName || '';
+
+      const span = document.createElement('span');
+      span.className = 'gllf-muted';
+      span.textContent = h.distance || '';
+
+      row.appendChild(link);
+      row.appendChild(span);
+      card.appendChild(row);
+    });
+
     shadow.appendChild(card);
   }
 
@@ -81,7 +111,17 @@
     clearCards(shadow);
     const card = document.createElement('div');
     card.className = 'gllf-card';
-    card.innerHTML = `<div class="gllf-title">Library lookup unavailable</div><div class="gllf-muted">${message}</div>`;
+
+    const title = document.createElement('div');
+    title.className = 'gllf-title';
+    title.textContent = 'Library lookup unavailable';
+
+    const muted = document.createElement('div');
+    muted.className = 'gllf-muted';
+    muted.textContent = message || '';
+
+    card.appendChild(title);
+    card.appendChild(muted);
     shadow.appendChild(card);
   }
 
