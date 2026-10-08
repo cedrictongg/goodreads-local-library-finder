@@ -14,11 +14,12 @@
   }
 
   function findIsbn() {
-    const rows = Array.from(document.querySelectorAll('[data-testid="metadataTitle"], .DescListItem, .infoBoxRowItem'));
-    const isbnRow = rows.find((el) => /isbn/i.test(el.textContent));
-    if (isbnRow) {
-      const match = isbnRow.textContent.match(/97[89]\d{10}|\d{9}[\dXx]/);
-      if (match) return match[0];
+    const rows = document.querySelectorAll('[data-testid="metadataTitle"], .DescListItem, .infoBoxRowItem');
+    for (const el of rows) {
+      if (/isbn/i.test(el.textContent)) {
+        const match = el.textContent.match(/97[89]\d{10}|\d{9}[\dXx]/);
+        if (match) return match[0];
+      }
     }
     const meta = document.querySelector('meta[property="books:isbn"]');
     return meta?.content?.trim() || null;
