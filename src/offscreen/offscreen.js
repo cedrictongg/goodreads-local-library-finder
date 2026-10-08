@@ -15,22 +15,27 @@ const SELECTORS = {
   libraryCount: '[data-testid="held-by-count"], .libraries-count'
 };
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (message?.target !== 'offscreen' || message.type !== 'PARSE_WORLDCAT_HTML') {
-    return false;
-  }
-  const holdings = parseWorldCatHtml(message.payload.html, message.payload.zip);
-  sendResponse(holdings);
-  return true;
-});
+const parser = typeof DOMParser !== 'undefined' ? new DOMParser() : null;
+
+if (typeof chrome !== 'undefined' && chrome?.runtime?.onMessage) {
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message?.target !== 'offscreen' || message.type !== 'PARSE_WORLDCAT_HTML') {
+      return false;
+    }
+    const holdings = parseWorldCatHtml(message.payload.html, message.payload.zip);
+    sendResponse(holdings);
+    return true;
+  });
+}
 
 /**
  * @param {string} html Raw HTML text from search.worldcat.org
  * @param {string} zip User-supplied ZIP, forwarded only to build outbound links
  * @returns {Array<{libraryName: string, location: string, catalogUrl: string, distance: string}>}
  */
-function parseWorldCatHtml(html, zip) {
-  const doc = new DOMParser().parseFromString(html, 'text/html');
+export function parseWorldCatHtml(html, zip) {
+  const p = parser || new DOMParser();
+  const doc = p.parseFromString(html, 'text/html');
   const card = doc.querySelector(SELECTORS.resultCard);
   if (!card) return [];
 
