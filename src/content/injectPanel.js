@@ -81,7 +81,17 @@
     clearCards(shadow);
     const card = document.createElement('div');
     card.className = 'gllf-card';
-    card.innerHTML = `<div class="gllf-title">Library lookup unavailable</div><div class="gllf-muted">${message}</div>`;
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'gllf-title';
+    titleEl.textContent = 'Library lookup unavailable';
+
+    const messageEl = document.createElement('div');
+    messageEl.className = 'gllf-muted';
+    messageEl.textContent = message;
+
+    card.appendChild(titleEl);
+    card.appendChild(messageEl);
     shadow.appendChild(card);
   }
 
