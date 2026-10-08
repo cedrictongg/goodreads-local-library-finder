@@ -8,11 +8,6 @@
 (function (global) {
   'use strict';
 
-  function textOf(selector) {
-    const el = document.querySelector(selector);
-    return el ? el.textContent.trim() : null;
-  }
-
   function findIsbn() {
     const rows = Array.from(document.querySelectorAll('[data-testid="metadataTitle"], .DescListItem, .infoBoxRowItem'));
     const isbnRow = rows.find((el) => /isbn/i.test(el.textContent));
@@ -26,11 +21,6 @@
 
   function parseGoodreadsBook() {
     return {
-      title: textOf('[data-testid="bookTitle"], h1.Text__title1') || document.title,
-      author: textOf('[data-testid="name"], .ContributorLink__name'),
-      version: textOf('[data-testid="pagesFormat"]'),
-      year: (document.querySelector('[data-testid="publicationInfo"]')?.textContent.match(/\d{4}/) || [])[0] || null,
-      genre: textOf('[data-testid="genresList"] a, .BookPageMetadataSection__genres a'),
       isbn: findIsbn()
     };
   }
